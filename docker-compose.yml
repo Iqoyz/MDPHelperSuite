@@ -1,0 +1,33 @@
+﻿services:
+
+  fyp-server:
+    image: fyp-server:latest # Your server image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Expose the API on port 8080
+    environment:
+      - ConnectionStrings__MongoDb=mongodb://mongo:27017 # MongoDB connection string
+    depends_on:
+      - mongo # Ensure the MongoDB container starts first
+    restart: unless-stopped
+    networks:
+      - fyp-network
+
+  mongo:
+    image: mongo:6 # Use the official MongoDB image
+    container_name: mongo
+    ports:
+      - "27017:27017" # Expose MongoDB on port 27017 for external access (optional)
+    volumes:
+      - mongo_data:/data/db # Persist MongoDB data across container restarts
+    restart: unless-stopped
+    networks:
+      - fyp-network
+
+volumes:
+  mongo_data: # Define a volume for MongoDB data persistence
+  
+networks:
+  fyp-network:

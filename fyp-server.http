@@ -1,0 +1,6 @@
+@fyp_server_HostAddress = http://localhost:5000
+
+### Get All Firmware
+GET {{fyp_server_HostAddress}}/api/firmware/
+Accept: application/json
+
