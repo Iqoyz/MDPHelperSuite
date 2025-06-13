@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+           x:Class="fyp_MDPHelperApp.Views.HWTesting.MotionSensorDataChartPopup"
+           CanBeDismissedByTappingOutsideOfPopup="true"
+           Size="1200, 1000">
+    <ScrollView Orientation="Vertical">
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label
+                x:Name="ChartTitleLabel"
+                FontSize="20"
+                HorizontalOptions="Center" />
+
+            <Label
+                x:Name="EmptyMessageLabel"
+                Text="No motion sensor data... Please flash motion sensor testing firmware and send commands to record sensor data."
+                HorizontalOptions="Center"
+                IsVisible="False"
+                Margin="20,20,0,20" />
+
+            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
+                <!-- X Section -->
+                <Label
+                    Grid.Row="0"
+                    x:Name="XLabel"
+                    IsVisible="False"
+                    HorizontalOptions="Center"
+                    Margin="0,10,0,0" />
+
+                <ScrollView
+                    Grid.Row="1"
+                    x:Name="DataScrollView1"
+                    Orientation="Horizontal"
+                    IsVisible="False"
+                    Scrolled="OnScrollView1Scrolled">
+                    <microcharts:ChartView
+                        x:Name="ChartView1"
+                        HeightRequest="350" />
+                </ScrollView>
+
+                <!-- Y Section -->
+                <Label
+                    Grid.Row="2"
+                    x:Name="YLabel"
+                    IsVisible="False"
+                    HorizontalOptions="Center"
+                    Margin="0,10,0,0" />
+
+                <ScrollView
+                    Grid.Row="3"
+                    x:Name="DataScrollView2"
+                    Orientation="Horizontal"
+                    IsVisible="False"
+                    Scrolled="OnScrollView2Scrolled">
+                    <microcharts:ChartView
+                        x:Name="ChartView2"
+                        HeightRequest="350" />
+                </ScrollView>
+                <!-- Z Section -->
+                <Label
+                    Grid.Row="4"
+                    x:Name="ZLabel"
+                    IsVisible="False"
+                    HorizontalOptions="Center"
+                    Margin="0,10,0,0" />
+
+                <ScrollView
+                    Grid.Row="5"
+                    x:Name="DataScrollView3"
+                    Orientation="Horizontal"
+                    IsVisible="False"
+                    Scrolled="OnScrollView3Scrolled">
+                    <microcharts:ChartView
+                        x:Name="ChartView3"
+                        HeightRequest="350" />
+                </ScrollView>
+            </Grid>
+            <microcharts:ChartView
+                x:Name="ChartView"
+                HeightRequest="300"
+                IsVisible="False" />
+
+            <HorizontalStackLayout
+                x:Name="LegendLayout"
+                HorizontalOptions="Center"
+                Margin="0,10,0,0"
+                IsVisible="False">
+                <!-- X Axis -->
+                <BoxView WidthRequest="20" HeightRequest="20" Color="#00BFFF" />
+                <Label Text="Roll" Margin="5,0,10,0" VerticalOptions="Center" />
+
+                <!-- Y Axis -->
+                <BoxView WidthRequest="20" HeightRequest="20" Color="#FF1943" />
+                <Label Text="Pitch" Margin="5,0,10,0" VerticalOptions="Center" />
+
+                <!-- Z Axis -->
+                <BoxView WidthRequest="20" HeightRequest="20" Color="#00FF00" />
+                <Label Text="Yaw" Margin="5,0,10,0" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Label
+                Text="Click outside to close the popup."
+                FontSize="12"
+                VerticalOptions="End"
+                Margin="0,10,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</mct:Popup>

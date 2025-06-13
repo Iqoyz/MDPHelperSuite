@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="fyp_MDPHelperApp.Views.HWTesting.UltrasonicDataChartPopUp"
+           xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+           CanBeDismissedByTappingOutsideOfPopup="true"
+           Size="1200, 1000">
+    <ScrollView
+        Orientation="Vertical">
+        <VerticalStackLayout
+            VerticalOptions="Center">
+            <Label
+                Text="Ultrasonic Data"
+                FontSize="20"
+                HorizontalOptions="Center" />
+
+            <Label
+                x:Name="EmptyMessageLabel"
+                Text="Empty ultrasonic sensor data... Please flash ultrasonic sensor testing firmware and send command to test and record ultrasonic sensor data."
+                HorizontalOptions="Center"
+                IsVisible="False"
+                Margin="20,20,0,20" />
+
+            <Grid RowDefinitions="Auto, Auto, Auto, Auto">
+                <Label
+                    Grid.Row="0"
+                    x:Name="DistanceDataLabel"
+                    Text="Distance detected (cm)"
+                    IsVisible="False"
+                    HorizontalOptions="Center"
+                    Margin="0,10,0,0" />
+
+                <ScrollView
+                    Grid.Row="1"
+                    x:Name="DataScrollView1"
+                    Orientation="Horizontal"
+                    IsVisible="False"
+                    Scrolled="OnScrollView1Scrolled">
+                    <microcharts:ChartView
+                        x:Name="ChartView1"
+                        HeightRequest="350" />
+                </ScrollView>
+
+                <Label
+                    Grid.Row="2"
+                    x:Name="ResponseTimeLabel"
+                    Text="Response time detected (us)"
+                    IsVisible="False"
+                    HorizontalOptions="Center"
+                    Margin="0,10,0,0" />
+
+                <ScrollView
+                    Grid.Row="3"
+                    x:Name="DataScrollView2"
+                    Orientation="Horizontal"
+                    IsVisible="False"
+                    Scrolled="OnScrollView2Scrolled">
+                    <microcharts:ChartView
+                        x:Name="ChartView2"
+                        HeightRequest="350" />
+                </ScrollView>
+            </Grid>
+
+            <Label
+                Text="Click outside to close the pop up."
+                FontSize="12"
+                VerticalOptions="End"
+                Margin="0,10,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</mct:Popup>

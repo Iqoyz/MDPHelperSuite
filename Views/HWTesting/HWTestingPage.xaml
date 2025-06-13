@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="fyp_MDPHelperApp.Views.HWTesting.HWTestingPage"
+             x:Name="HwTestingPage">
+
+    <ContentPage.Content>
+        <Grid x:Name="MainGrid" Padding="10">
+            <!-- Define two equal columns -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ScrollView>
+                <!-- First main VerticalStackLayout in the first column -->
+                <VerticalStackLayout
+                    Spacing="25"
+                    Padding="30,0">
+
+                    <Label
+                        Text="Welcome to &#10;Hardware Testing!"
+                        Style="{StaticResource SubHeadline}"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource SecondaryDarkText}}"
+                        SemanticProperties.HeadingLevel="Level2" />
+
+                    <Grid ColumnSpacing="20" RowSpacing="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            x:Name="ConnectButton"
+                            Text="Connect COM port"
+                            Clicked="OnConnectButtonClicked"
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            ToolTipProperties.Text="Click to connect the COM port that connected with your STM32" />
+
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            x:Name="DisconnectButton"
+                            Text="Disconnect COM port"
+                            Clicked="OnDisconnectButtonClicked"
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            ToolTipProperties.Text="Click to disconnect the selected COM port" />
+
+                        <VerticalStackLayout
+                            Grid.Row="1"
+                            Grid.Column="0">
+                            <Label
+                                Text="Select the flashing method"
+                                IsVisible="{OnPlatform MacCatalyst=true, Default=false}"
+                                HorizontalOptions="Start" />
+
+                            <Picker
+                                x:Name="FlashMethodDropdown"
+                                Title="{OnPlatform WinUI= Select the flashing method}"
+                                SelectedIndexChanged="FlashMethodDropdown_SelectedIndexChanged">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>STLink/V2</x:String>
+                                        <x:String>COM Port</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout
+                            Grid.Row="1"
+                            Grid.Column="1">
+
+                            <Label
+                                Text="Current testing part"
+                                IsVisible="{OnPlatform MacCatalyst=true, Default=false}"
+                                HorizontalOptions="Start" />
+
+                            <Picker
+                                x:Name="TestingPartDropdown"
+                                Title="{OnPlatform WinUI= Current testing part}"
+                                SelectedIndexChanged="TestingPartDropdown_SelectedIndexChanged">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>None</x:String>
+                                        <x:String>Motor</x:String>
+                                        <x:String>Servo</x:String>
+                                        <x:String>Ultrasonic Sensor</x:String>
+                                        <x:String>IR Sensor</x:String>
+                                        <x:String>Motion Sensors</x:String>
+                                        <x:String>Custom</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </VerticalStackLayout>
+
+                        <ScrollView
+                            Orientation="Horizontal"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2">
+
+                            <HorizontalStackLayout
+                                Spacing="10">
+
+                                <Button
+                                    x:Name="MenuButton"
+                                    Text="Show menu"
+                                    Clicked="OnMenuButtonClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="False"
+                                    ToolTipProperties.Text="Click to show command menu of current testing part" />
+
+                                <Button
+                                    x:Name="CancelButton"
+                                    Text="Cancel flashing"
+                                    Clicked="OnCancelButtonClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="false"
+                                    ToolTipProperties.Text="Click to cancel flashing " />
+                            </HorizontalStackLayout>
+                        </ScrollView>
+
+                        <BoxView Grid.Row="3"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="2"
+                                 HeightRequest="1"
+                                 Color="Gray" />
+
+                        <ScrollView
+                            Orientation="Horizontal"
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2">
+
+                            <HorizontalStackLayout
+                                Spacing="10">
+
+                                <Button
+                                    x:Name="FlashMotorTestingButton"
+                                    Text="Flash motor testing"
+                                    Clicked="OnFlashMotorClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="True"
+                                    ToolTipProperties.Text="Click to flash motor testing firmware to STM32" />
+
+                                <Button
+                                    x:Name="MotorDataButton"
+                                    Text="Show motor speed graph"
+                                    Clicked="OnMotorDataButtonClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="False"
+                                    ToolTipProperties.Text="Click to visualize motor speed data" />
+
+                                <Button
+                                    x:Name="ClearMotorDataButton"
+                                    Text="Reset motor graph"
+                                    Clicked="OnClearMotorDataClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="False"
+                                    ToolTipProperties.Text="Click to clear all motor speed data" />
+                            </HorizontalStackLayout>
+                        </ScrollView>
+
+                        <ScrollView
+                            Orientation="Horizontal"
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2">
+
+                            <HorizontalStackLayout
+                                Spacing="10">
+
+                                <Button
+                                    x:Name="FlashServoTestingButton"
+                                    Text="Flash servo testing"
+                                    Clicked="OnFlashServoClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="True"
+                                    ToolTipProperties.Text="Click to flash servo testing firmware to STM32" />
+
+                            </HorizontalStackLayout>
+                        </ScrollView>
+
+                        <ScrollView
+                            Orientation="Horizontal"
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2">
+
+                            <HorizontalStackLayout
+                                Spacing="10">
+
+                                <Button
+                                    x:Name="FlashUltrasonicButton"
+                                    Text="Flash ultrasonic testing"
+                                    Clicked="OnFlashUltrasonicClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="True"
+                                    ToolTipProperties.Text="Click to flash ultrasonic sensor testing firmware to STM32" />
+
+                                <Button
+                                    x:Name="UltrasonicResultButton"
+                                    Text="Show US data graph"
+                                    Clicked="OnUltrasonicDataAndResult"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="false"
+                                    ToolTipProperties.Text="Click to visualize ultrasonic data." />
+
+                                <Button
+                                    x:Name="ClearUsDataButton"
+                                    Text="Reset US graph"
+                                    Clicked="ClearUsDataClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="false"
+                                    ToolTipProperties.Text="Click to clear all ultrasonic data." />
+
+                            </HorizontalStackLayout>
+                        </ScrollView>
+
+                        <ScrollView
+                            Orientation="Horizontal"
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2">
+
+                            <HorizontalStackLayout
+                                Spacing="10">
+
+                                <Button
+                                    x:Name="FlashIRTestingButton"
+                                    Text="Flash IR testing"
+                                    Clicked="OnFlashIRTestingClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="True"
+                                    ToolTipProperties.Text="Click to flash IR testing firmware to STM32" />
+                                
+                                <Button
+                                    x:Name="IRResultButton"
+                                    Text="Show IR data graph"
+                                    Clicked="OnIRDataAndResult"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="false"
+                                    ToolTipProperties.Text="Click to visualize IR data." />
+
+                                <Button
+                                    x:Name="ClearIRDataButton"
+                                    Text="Reset IR graph"
+                                    Clicked="ClearIRDataClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="false"
+                                    ToolTipProperties.Text="Click to clear all IR data." />
+                            </HorizontalStackLayout>
+                        </ScrollView>
+
+                        <ScrollView
+                            Orientation="Horizontal"
+                            Grid.Row="8"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2">
+
+                            <HorizontalStackLayout
+                                Spacing="10">
+
+                                <Button
+                                    x:Name="FlashMotionTestingButton"
+                                    Text="Flash motion testing"
+                                    Clicked="OnFlashMotionTestingClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="True"
+                                    ToolTipProperties.Text="Click to flash motion sensor testing firmware to STM32" />
+
+                                <Button
+                                    x:Name="MotionResultButton"
+                                    Text="Show motion data graph"
+                                    Clicked="OnMotionDataAndResult"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="False"
+                                    ToolTipProperties.Text="Click to visualize motion data." />
+
+                                <Button
+                                    x:Name="ClearMotionDataButton"
+                                    Text="Reset motion graph"
+                                    Clicked="ClearMotionDataClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="false"
+                                    ToolTipProperties.Text="Click to clear all motion sensor data." />
+
+                            </HorizontalStackLayout>
+                        </ScrollView>
+
+                        <ScrollView
+                            Orientation="Horizontal"
+                            Grid.Row="9"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2">
+
+                            <HorizontalStackLayout
+                                Spacing="10">
+                                <Button
+                                    x:Name="FlashCustomButton"
+                                    Text="Flash custom file"
+                                    Clicked="OnCustomFlashClicked"
+                                    HorizontalOptions="Fill"
+                                    ToolTipProperties.Text="Click to select and flash your own firmware file (.hex or .bin)" />
+
+                                <Button
+                                    x:Name="CustomResultButton"
+                                    Text="Show custom data graph"
+                                    Clicked="OnCustomDataAndResult"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="False"
+                                    ToolTipProperties.Text="Click to visualize your custom data." />
+
+                                <Button
+                                    x:Name="ClearCustomDataButton"
+                                    Text="Reset custom graph"
+                                    Clicked="ClearCustomDataClicked"
+                                    HorizontalOptions="Fill"
+                                    IsEnabled="false"
+                                    ToolTipProperties.Text="Click to clear all custom data." />
+
+                            </HorizontalStackLayout>
+                        </ScrollView>
+                    </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Second main VerticalStackLayout in the second column -->
+            <VerticalStackLayout Grid.Column="1">
+                <Grid ColumnSpacing="20" RowSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        x:Name="LogLabel"
+                        Text="Log Message"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource SecondaryDarkText}}"
+                        Style="{StaticResource SubHeadline}"
+                        FontSize="20"
+                        Padding="0,0,0,10"
+                        SemanticProperties.HeadingLevel="Level3" />
+
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        x:Name="ClearLogButton"
+                        Text="Clear log"
+                        Clicked="OnClearLogButtonClicked"
+                        HorizontalOptions="Fill"
+                        HeightRequest="35"
+                        ToolTipProperties.Text="Click to clear all log"
+                        FontSize="10" />
+
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="ScrollToEndButton"
+                        Text="Scroll to end log"
+                        Clicked="OnScrollToEndButtonClicked"
+                        HorizontalOptions="Fill"
+                        HeightRequest="35"
+                        ToolTipProperties.Text="Click to automatically scroll to the latest log in the log frame"
+                        FontSize="10" />
+
+                    <Editor Grid.Row="2"
+                            Grid.Column="0"
+                            x:Name="CommandInputEditor"
+                            Placeholder="Enter command here"
+                            TextChanged="OnCommandInputEditorTextChanged"
+                            HeightRequest="40" />
+                    <HorizontalStackLayout
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Spacing="10">
+                        <Button
+                            x:Name="SendCommandButton"
+                            Text="Send"
+                            HorizontalOptions="Start"
+                            Clicked="SendCommandButtonClicked"
+                            ToolTipProperties.Text="Click to send the command to STM32 board"
+                            HeightRequest="40" />
+                        <VerticalStackLayout>
+                            <Label
+                                x:Name="LogTraceLabel"
+                                Text="Trace Log: OFF" />
+
+                            <CheckBox
+                                x:Name="LogTraceCheckBox"
+                                CheckedChanged="OnLogTraceCheckBoxChanged" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Grid>
+                <ProgressBar x:Name="ProgressBar" Margin="0,5,0,0" />
+                <Frame x:Name="LogFrame"
+                       BorderColor="Gray"
+                       CornerRadius="5"
+                       HasShadow="True"
+                       Padding="0"
+                       Margin="5">
+                    <CollectionView x:Name="LogCollectionView"
+                                    ItemsSource="{Binding LogMessages}"
+                                    ItemsUpdatingScrollMode="KeepScrollOffset"
+                                    Margin="5,0,0,0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label
+                                    Text="{Binding LogMessage}"
+                                    FontSize="14"
+                                    TextColor="{Binding MessageColor}" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+            </VerticalStackLayout>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>
