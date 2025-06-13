@@ -54,6 +54,12 @@ A simple **console tool** to:
 
 ---
 
+## Demo Video
+
+Watch the demo video on [YouTube](https://youtu.be/2wcXU0GDDFA).
+
+---
+
 ## 📄 Documentation
 
 For full details, diagrams, and implementation strategy, refer to:  
