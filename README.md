@@ -46,11 +46,9 @@ A simple **console tool** to:
 
 ## 🧑‍💻 Tech Stack
 
-![C#](https://img.shields.io/badge/-CSharp-05122A?style=flat&logo=c-sharp&logoColor=239120)
-![Python](https://img.shields.io/badge/-Python-05122A?style=flat&logo=python)
-![Flask](https://img.shields.io/badge/-Flask-05122A?style=flat&logo=flask)
+![C#](https://img.shields.io/badge/-C%23-05122A?style=flat&logo=c-sharp&logoColor=239120)&nbsp;
 ![.NET MAUI](https://img.shields.io/badge/-.NET%20MAUI-05122A?style=flat&logo=dotnet&logoColor=512BD4)
-![SQLite](https://img.shields.io/badge/-SQLite-05122A?style=flat&logo=sqlite&logoColor=003B57)
+![MongoDB](https://img.shields.io/badge/-MongoDB-05122A?style=flat&logo=mongodb&logoColor=47A248)
 ![Git](https://img.shields.io/badge/-Git-05122A?style=flat&logo=git)
 ![GitHub](https://img.shields.io/badge/-GitHub-05122A?style=flat&logo=github)
 
