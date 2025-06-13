@@ -1,0 +1,21 @@
+# Ignore Visual Studio and .NET build artifacts
+bin/
+obj/
+
+# Rider/IntelliJ IDEA project files
+.idea/
+
+# Build directories
+out/
+
+# Dependency directories
+packages/
+node_modules/
+
+# Ignore generated files
+*.vs
+*.vscode
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
