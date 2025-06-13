@@ -1,0 +1,52 @@
+<Shell
+    x:Class="fyp_MDPHelperApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:fyp_MDPHelperApp.Views"
+    xmlns:about="clr-namespace:fyp_MDPHelperApp.Views.About"
+    xmlns:hwTesting="clr-namespace:fyp_MDPHelperApp.Views.HWTesting"
+    Padding="4,0,0,0"
+    x:Name="flyout"
+    Title="MDP Helper"
+    FlyoutBackgroundColor="{OnPlatform Default={AppThemeBinding Light={StaticResource Secondary},
+                                                                   Dark={StaticResource Gray600}}}"
+    FlyoutBehavior="{OnPlatform WinUI=Locked, Default=Flyout}">
+
+    <Shell.FlyoutHeader>
+        <Label Margin="{OnPlatform MacCatalyst='0'}"
+               Padding="{OnPlatform MacCatalyst='4, 100, 4, 0'}"
+               FontSize="20"
+               HorizontalTextAlignment="Start"
+               IsVisible="{OnPlatform WinUI=false, Default=true}"
+               Text="Menu"
+               VerticalTextAlignment="Center" />
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem Title="Home" Route="MainPage" FlyoutIcon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Hardware Testing" Route="HWTestingPage" FlyoutIcon="xct.png">
+        <ShellContent ContentTemplate="{DataTemplate hwTesting:HWTestingPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="About MDP Helper" Route="AboutPage" FlyoutIcon="info.png">
+        <ShellContent ContentTemplate="{DataTemplate about:AboutPage}" />
+    </FlyoutItem>
+
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout HorizontalOptions="End" VerticalOptions="End">
+            <HorizontalStackLayout VerticalOptions="Center" Spacing="10">
+                <Label Text="Toggle Theme"
+                       VerticalOptions="Center" />
+                <Switch IsToggled="{Binding IsDarkTheme}"
+                        Toggled="OnThemeSwitchToggled" />
+            </HorizontalStackLayout>
+            <Label Padding="4"
+                   HorizontalOptions="End"
+                   x:Name="versionLabel"
+                   Text="Version Number"
+                   VerticalOptions="End" />
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
+</Shell>

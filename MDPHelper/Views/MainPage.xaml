@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="fyp_MDPHelperApp.Views.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit" />
+
+            <Label
+                x:Name="versionLabel"
+                Text="Welcome to MDP Helper Version number"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource SecondaryDarkText}}"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2" />
+
+            <!-- Feature Description -->
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="Gray"
+                Padding="10"
+                CornerRadius="10">
+                <StackLayout>
+                    <Label Text="App Features" FontSize="20" FontAttributes="Bold" />
+                    <Label Text="• Preloaded firmware files to test basic functionality of your robot hardware." />
+                    <Label Text="• Option to upload your own firmware file and flash it to your STM32." />
+                    <Label Text="• Data communication capabilities with your STM32. " />
+                    <Label Text="These features can be found in the Hardware Testing section." />
+                </StackLayout>
+            </Frame>
+
+            <!-- Testing Advice -->
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="Gray"
+                Padding="10"
+                CornerRadius="10">
+                <StackLayout>
+                    <Label Text="Before You Start (Important)" FontSize="20" FontAttributes="Bold" />
+                    <Label
+                        Text="It is advised to refer to the Guide (located in 'About MDP Helper' Page) before conducting tests. The User Guide contains important information about how to use this app and get the best results." />
+                </StackLayout>
+            </Frame>
+
+            <!-- Navigation Instructions -->
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="Gray"
+                Padding="10"
+                CornerRadius="10">
+                <StackLayout>
+                    <Label Text="Navigation" FontSize="20" FontAttributes="Bold" />
+                    <Label
+                        Text="Use the left navigation panel to access different sections of the app. For instance:"
+                        Margin="0,0,0,10" />
+                    <Label Text="• 'Home' returns you to this main page." />
+                    <Label
+                        Text="• 'Hardware Testing' lets you test your STM32 hardware functionality. You can hover your cursor over the buttons in this section to see tooltips describing their functionality." />
+                    <Label Text="• 'About MDP Helper' contains the user guide and additional resources." />
+                </StackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

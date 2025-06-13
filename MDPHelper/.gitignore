@@ -1,0 +1,31 @@
+# Rider / IntelliJ IDEA files
+/.idea/
+/.idea.fyp-MDPHelperApp.iml
+/shelf/
+/workspace.xml
+/contentModel.xml
+/modules.xml
+/projectSettingsUpdater.xml
+
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# Build directories
+/bin/
+/obj/
+
+#ignore files created by visual studio
+.vs/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log

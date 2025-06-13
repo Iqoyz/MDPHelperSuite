@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="fyp_MDPHelperApp.Views.About.QnAPage">
+    <ContentPage.Content>
+        <StackLayout Padding="30" Margin="0,10,0,0">
+            <!-- Decorative Line -->
+            <BoxView HeightRequest="1"
+                     Color="Gray"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Center"
+                     Margin="0,0,0,20" />
+
+            <Label
+                Text="QnA"
+                FontSize="26"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource SecondaryDarkText}}"
+                HorizontalTextAlignment="Start"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <!-- Question and Answer -->
+            <StackLayout Margin="0,20,0,0">
+                <Label
+                    Text="Can you provide any additional resources for STM development?"
+                    FontSize="20"
+                    TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                    Margin="0,10,0,5" />
+
+                <Label
+                    Text="I am unable to provide additional resources for STM development beyond those listed in the user guide. The resources stated in the user guide are all that I am permitted to share."
+                    FontSize="16"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,859 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:services="clr-namespace:fyp_MDPHelperApp.Services"
+             x:Class="fyp_MDPHelperApp.Views.About.HWTestingGuidePage">
+    <Grid>
+        <ScrollView
+            x:Name="UserGuideScrollView"
+            Grid.Row="0"
+            Scrolled="OnScrolled">
+
+            <StackLayout Padding="30"
+                         Margin="0,10,0,0"
+                         Spacing="20">
+
+                <BoxView HeightRequest="1"
+                         Color="Gray"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center" />
+
+                <Label Text="User Guide for hardware testing"
+                       FontSize="26"
+                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource SecondaryDarkText}}"
+                       HorizontalTextAlignment="Start"
+                       SemanticProperties.HeadingLevel="Level1"
+                       VerticalOptions="Center" />
+
+                <Label x:Name="FlashingMethodsSection"
+                       Text="Flashing Methods"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label
+                    Text="There are two ways to flash the STM32 using this app: one is through STLink/V2, and the other is through UART. Please use the second method if the primary one fails. You can refer to the respective section below to learn more about the setup."
+                    FontSize="16" />
+
+                <Label x:Name="STLinkFlash"
+                       Text="1.Flash using STLink"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level3" />
+
+                <Label
+                    Text="Connect the STLink/V2 to your computer via USB and ensure the necessary drivers are installed."
+                    FontSize="16" />
+
+                <Image Source="stlink_connection.png" HeightRequest="400" />
+
+                <Label x:Name="UartFlash"
+                       Text="2.Flash using Uart"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level3" />
+
+                <Label
+                    Text="Before flashing, connect the STM32 to your PC using a USB to Micro USB cable. Ensure you connect to the USART3 port first."
+                    FontSize="16" />
+
+                <Image Source="huart1_connection.png" HeightRequest="400" />
+
+
+                <Label x:Name="HardwareTestingSection"
+                       Text="Hardware Testing"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="To send the specific command to different hardware testing. " />
+                            <Span
+                                Text="Select the respective testing part in Current Testing Part dropdown, and follow the instruction in the menu to interact with flashed STM32. " />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Image Source="hardware_testing_guide_1.png" HeightRequest="400" />
+
+                <Label x:Name="DataCommSection"
+                       Text="Data communication"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="After flashing the firmware files, you can either connect your PC to the USART1 or USART3 port on the STM32 using a USB to Micro USB cable. " />
+                            <Span
+                                Text="Please do not connect to both USART1 and USART2 at the same time. " />
+                            <Span
+                                Text="Use the connect function to connect the app with the STM32 that is connected to your PC by selecting the correct COM port " />
+                            <Span
+                                Text="to receive or send data to your STM32. " />
+                            <Span Text="&#10;&#10;" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+
+                <HorizontalStackLayout
+                    HeightRequest="400"
+                    HorizontalOptions="Center"
+                    Spacing="20">
+                    <Image Source="huart1_connection.png" />
+                    <Image Source="huart3_connection.png" />
+                </HorizontalStackLayout>
+
+                <Label FontSize="16" Text="PS: The left figure uses huart1, and the right figure uses huart3." />
+
+                <Label x:Name="MotorTestingSection"
+                       Text="Motor Testing"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="To test whether your DC motors are functioning, " />
+                            <Span Text="Flash the motor testing firmware to your STM32 and refer to the menu " />
+                            <Span Text="to send commands to the STM32. " />
+                            <Span
+                                Text="Commands such as FW (both wheels move forward), BW (both wheels move backward), FL (left wheel moves forward), FR (right wheel moves forward), BL (left wheel moves backward), and BR (right wheel moves backward) are available. " />
+                            <Span
+                                Text="You can set the duration for the motor to move or set it to move indefinitely (e.g., FW INDEF means both wheels move forward indefinitely). " />
+                            <Span
+                                Text="You can also set the duty cycle (speed) for the motor. However, to protect your motor, " />
+                            <Span Text="the maximum duty cycle you can set is 5500." />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Refer to the code snippet below for implementation details on how to adjust duty cycle of the motors." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Frame
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
+                    BorderColor="Gray"
+                    CornerRadius="5">
+                    <WebView
+                        x:Name="WebViewMotor1"
+                        BackgroundColor="Transparent">
+                        <WebView.Source>
+                            <HtmlWebViewSource x:Name="WebPageMotor1" />
+                        </WebView.Source>
+                    </WebView>
+                </Frame>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="In the implementation, setting the duty cycle refers to the raw timer register value (CCR)."
+                                FontAttributes="Italic" />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="After running the motors, you can visualize the recorded motor encoder data in a line chart. " />
+                            <Span
+                                Text="Please check the performance of both motors and inspect the encoder data to ensure everything is functioning correctly. " />
+                            <Span
+                                Text="Look for signs of performance issues such as significant differences in RPMs between the motors, irregular fluctuations, or unexpected stoppages." />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="The RPM is calculated based on the encoder pulse counts using the following formula:&#10;" />
+                            <Span
+                                Text="RPM = (Δcount × 60) / (PPR × 4)&#10;"
+                                FontAttributes="Bold" />
+                            <Span
+                                Text="where Δcount represents the difference in encoder counts within a 1s interval, and PPR refers to the pulses per revolution of the encoder. " />
+                            <Span Text="&#10;&#10;" />
+                            
+                            <Span
+                                Text="Note: Motor encoders are not always 100% accurate. "
+                                FontAttributes="Italic"/>
+                            <Span
+                                Text="Various factors such as signal noise, mechanical slip, electrical interference, and resolution limitations can affect the accuracy of RPM measurements. "
+                                FontAttributes="Italic" />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Refer to the code snippet below for calculating RPM." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                
+                <Frame
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
+                    BorderColor="Gray"
+                    CornerRadius="5">
+                    <WebView
+                        x:Name="WebViewMotor2"
+                        BackgroundColor="Transparent">
+                        <WebView.Source>
+                            <HtmlWebViewSource x:Name="WebPageMotor2" />
+                        </WebView.Source>
+                    </WebView>
+                </Frame>
+                
+                <HorizontalStackLayout Spacing="10">
+                    <Label
+                        FontSize="16"
+                        Text="Resource &amp; Reference: "
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        Text="Tutorial for RPM Implementation"
+                        FontSize="16"
+                        services:CursorBehavior.Cursor="Hand"
+                        TextColor="DodgerBlue"
+                        TextDecorations="Underline"
+                        VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenWebCommand}"
+                                CommandParameter="https://automaticaddison.com/how-to-calculate-the-velocity-of-a-dc-motor-with-encoder/" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+                
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="Based on the collected data, analyze the performance of the motors to identify potential issues. " />
+                            <Span
+                                Text="For example, if one motor's RPM is consistently much lower than the other, consider recalibrating the motor, checking for mechanical obstructions, or inspecting the wiring. " />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+
+                <Label FontSize="16"
+                       Text="Here is the connection between the motor and your STM32." />
+
+                <Image Source="motor_testing.png" HeightRequest="400" />
+
+                <Label FontSize="16"
+                       Text="PS: Connect the left motor to the MotorA port and the right motor to the MotorB port on the STM32." />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="If you wish to display your motor data using your own firmware file, select 'Motor' as the current testing method, and program your firmware to send the speed data through UART in the following format:" />
+                            <Span Text="&#10;&#10;" />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;Left_RPM: %d, Right_RPM: %d\n&quot;" />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Next steps include adjusting the duty cycle and re-testing the motors to validate improvements. " />
+                            <Span
+                                Text="Observe the data for analysis and monitor progress over time." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+
+                <Label x:Name="ServoTestingSection"
+                       Text="Servo Testing"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="To test whether your servo is functioning, " />
+                            <Span
+                                Text="Flash the servo testing firmware to your STM32 and refer to the menu " />
+                            <Span
+                                Text="to interact with your servo. " />
+                            <Span
+                                Text="The PWM value for each servo might vary, but it typically falls within the range of 80 to 250. " />
+                            <Span
+                                Text="This value represents the raw timer's capture/compare register (CCR4), which determines the duty cycle applied to the servo.&#10;&#10;" />
+                            <Span
+                                Text="The current implementation adjusts the servo position based on the PWM duty cycle but does not correlate directly to specific degree measurements. " />
+                            <Span
+                                Text="You will need to calibrate your servo by trial and error, observing how the servo moves for each PWM value and determining which value corresponds to the zero-degree position and other angles.&#10;&#10;" />
+                            <Span
+                                Text="Refer to the code snippet below for implementation details on how to adjust the servo's PWM duty cycle." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Frame
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
+                    BorderColor="Gray"
+                    CornerRadius="5">
+                    <WebView
+                        x:Name="WebViewServo1"
+                        BackgroundColor="Transparent">
+                        <WebView.Source>
+                            <HtmlWebViewSource x:Name="WebPageServo1" />
+                        </WebView.Source>
+                    </WebView>
+                </Frame>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="The SetServoTurn function takes a timer handle and a servo duty cycle value and sets the duty cycle to adjust the servo's position. After setting the duty cycle, a delay is added to allow the servo to settle at the desired position. "
+                                FontAttributes="Italic" />
+                            <Span
+                                Text="The PWM unit used is based on the timer's capture/compare register (CCR4), where the value written corresponds to the timer's configuration. "
+                                FontAttributes="Italic" />
+                            <Span
+                                Text="&#10;&#10;Here is the connection between the servo and your STM32." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Image Source="servo_testing.png" HeightRequest="400" />
+
+                <Label FontSize="16"
+                       Text="PS: The timer pin of the servo is connected to PE14 on the board." />
+
+
+                <Label x:Name="UltrasonicTestingSection"
+                       Text="Ultrasonic Sensor Testing"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="To test whether your ultrasonic sensor is functioning, " />
+                            <Span
+                                Text="Flash the ultrasonic testing firmware to your STM32 and refer to the menu " />
+                            <Span
+                                Text="to send commands to the STM32. " />
+                            <Span
+                                Text="Use the command 'MANUAL' to test the sensor. This command allows the sensor's raw detected values to be sent to the app, " />
+                            <Span
+                                Text="so you can observe the values and verify the sensor's functionality." />
+                            <Span
+                                Text="While analyzing the data, check for inconsistencies in the distance values, such as unexpected spikes or no readings at all. " />
+                            <Span
+                                Text="If such issues are detected, consider verifying the sensor's placement or checking the connections to the STM32." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label FontSize="16"
+                       Text="Here is the connection between the ultrasonic sensor and your STM32." />
+
+                <HorizontalStackLayout
+                    HeightRequest="400"
+                    HorizontalOptions="Center"
+                    Spacing="20">
+                    <Image Source="ultrasonic_testing.png" />
+                    <Image Source="ultrasonic_testing_schematic.png" />
+                </HorizontalStackLayout>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="PS: The echo pin and trigger pin of the ultrasonic sensor are connected to PD12 and PD13 on the board respectively." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="If you wish to display your ultrasonic data using your own firmware file, select 'Ultrasonic sensor' as the current testing method, and program your firmware to send the ultrasonic data through UART in the following format:" />
+                            <Span Text="&#10;&#10;" />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;US %d, RT:%d\n&quot;" />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Note: 'US' represents the distance, and 'RT' represents the response time, which is the time taken from when the ultrasonic sensor emits a pulse to when it receives the reflected pulse. " />
+                            <Span
+                                Text="You can set the 'RT' value to zero if it's not needed." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label
+                        FontSize="16"
+                        Text="Resource &amp; Reference: "
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        Text="Tutorial for Ultrasonic Sensor Implementation"
+                        FontSize="16"
+                        services:CursorBehavior.Cursor="Hand"
+                        TextColor="DodgerBlue"
+                        TextDecorations="Underline"
+                        VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenWebCommand}"
+                                CommandParameter="https://controllerstech.com/hcsr04-ultrasonic-sensor-and-stm32/" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Understanding Response Time:&#10;" FontAttributes="Bold" />
+                            <Span Text="The response time is calculated based on the following steps:&#10;" />
+                            <Span
+                                Text="1. The timer starts counting when the rising edge of the echo signal is detected (IC_Val1).&#10;" />
+                            <Span
+                                Text="2. The timer stops (or a second capture is made) when the falling edge is detected (IC_Val2).&#10;" />
+                            <Span
+                                Text="3. The elapsed time is determined by the difference between IC_Val2 and IC_Val1 in timer ticks.&#10;" />
+                            <Span
+                                Text="4. As the timer operates at 1 MHz, each tick corresponds to 1 microsecond.&#10;&#10;" />
+                            <Span
+                                Text="In conclusion, the difference between IC_Val2 and IC_Val1 directly represents the response time in microseconds.&#10;"
+                                FontAttributes="Italic" />
+                            <Span
+                                Text="You can use this response time to calculate the delay required for your application, ensuring the ultrasonic sensor has sufficient time to process measurements accurately, especially for high-frequency polling or real-time adjustments."
+                                FontAttributes="Italic" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label x:Name="IRTestingSection"
+                       Text="IR Sensor Testing"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="To test whether your IR sensor is functioning, " />
+                            <Span
+                                Text="Flash the IR testing firmware to your STM32 and refer to the menu " />
+                            <Span
+                                Text="to interact with your IR sensor. " />
+                            <Span
+                                Text="Use the 'MANUAL' command to manually observe the sensor readings. " />
+                            <Span
+                                Text="The sensor's raw adc values and detected distance will be sent to your desktop app, allowing you to verify the sensor's functionality. " />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="While analyzing the data, check for inconsistencies in the sensor readings, such as unexpected spikes or no readings at all. " />
+                            <Span
+                                Text="If such issues are detected, consider verifying the sensor's placement or checking the connections to the STM32. " />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="Additionally, you can use the 'CALIBRATE {distance interval}' command to perform a step-by-step calibration. " />
+                            <Span
+                                Text="This command prompts you to place an object at known distances, starting from the specified interval (e.g., 10 cm). " />
+                            <Span
+                                Text="For each distance, press the user button to record the ADC value, allowing you to build a calibration profile for accurate distance measurement. " />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Once the calibration profile is built, you can apply machine learning models, such as linear regression or logarithmic regression, to estimate the constants for the IR sensor's distance formula. " />
+                            <Span
+                                Text="These models help derive the most accurate fit between the ADC readings and actual distances, enhancing the sensor's measurement reliability. " />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label
+                        FontSize="16"
+                        Text="Resource &amp; Reference: "
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        Text="Tutorial for calibrating IR sensor"
+                        FontSize="16"
+                        services:CursorBehavior.Cursor="Hand"
+                        TextColor="DodgerBlue"
+                        TextDecorations="Underline"
+                        VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenWebCommand}"
+                                CommandParameter="https://aleksandarhaber.com/noise-reduction-and-calibration-of-distance-sensors-sharp-infrared-sensors/#google_vignette" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="The reference above also includes details on sensor calibration and the voltage-to-distance conversion function. " />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Note: IR sensors may exhibit varying behavior due to manufacturing differences. " />
+                            <Span
+                                Text="It is recommended that each user calibrates their own IR sensor for accurate results. " />
+                            <Span
+                                Text="After calibration, you can use the 'Custom Testing' feature to visualize real-time sensor readings and verify performance. " />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+
+                <Label FontSize="16"
+                       Text="Here is the connection between the IR sensor and your STM32." />
+
+                <Image Source="ir_testing.png" HeightRequest="400" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="PS: The output pin of the IR sensor is connected to PC1 (ADC1) below the board." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label x:Name="MotionTestingSection"
+                       Text="Motion Sensor Testing"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="To test whether your motion sensors (accelerometer, gyroscope, and magnetometer) are functioning properly, " />
+                            <Span
+                                Text="Flash the motion testing firmware to your STM32 and refer to the menu to send commands. " />
+                            <Span
+                                Text="Commands such as ACCEL ANG (to read accelerometer angles), ACCEL RAW (to read raw accelerometer data), GYRO DRIFT (to calculate gyroscope drift over time), GYRO RAW (to read raw gyroscope data), etc." />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="These commands allow the raw and processed sensor values to be sent to the app, enabling you to observe and analyze the data. " />
+                            <Span
+                                Text="While analyzing the data, visualize the recorded values in line charts to detect patterns. Observing data patterns helps identify phenomenons such as gyroscope drift, noise susceptibility in accelerometer readings, and interference from external magnetic fields in magnetometer readings." />
+                            <Span
+                                Text="These insights can help you calibrate the sensors to improve accuracy." />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="If unexpected issues are detected such as inconsistent readings, unexpected spikes, or missing data, consider verifying the sensor placement or checking the connections to the STM32." />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="If you wish to display your motion sensor data using your own firmware file, simply select 'Motion' as the current testing method and program your firmware to send data through UART in the following format depending on the sensor being tested: " />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Accelerometer Angles: " />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;accel: %.2f, %.2f, %.2f\n&quot;" />
+                            <Span Text=" (Roll, Pitch, Tilt)&#10;" />
+                            <Span
+                                Text="Gyroscope Angles: " />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;gyro: %.2f, %.2f, %.2f\n&quot;" />
+                            <Span Text=" (Roll, Pitch, Yaw)&#10;" />
+                            <Span
+                                Text="Magnetometer Angles: " />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;magnet: %.2f, %.2f, %.2f\n&quot;" />
+                            <Span Text=" (Yaw will be displayed only)&#10;" />
+                            <Span
+                                Text="Raw Accelerometer Data: " />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;accel raw: %.2f, %.2f, %.2f\n&quot;" />
+                            <Span Text=" (X, Y, Z)&#10;" />
+                            <Span
+                                Text="Raw Gyroscope Data: " />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;gyro raw: %.2f, %.2f, %.2f\n&quot;" />
+                            <Span Text=" (X, Y, Z)&#10;" />
+                            <Span
+                                Text="Raw Magnetometer Data: " />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;magnet raw: %.2f, %.2f, %.2f\n&quot;" />
+                            <Span Text=" (X, Y, Z)" />
+
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="Sensor Angle Calculations Used: " FontAttributes="Bold" />
+                            <Span Text="&#10;" />
+                            <Span
+                                Text="1. Accelerometer: " FontAttributes="Bold" />
+                            <Span
+                                Text="Pitch and Roll angles are calculated using the accelerometer values (X, Y, Z). The formulas are as follows:&#10;" />
+                            <Span
+                                Text="- Pitch: atan(aX / sqrt(aY^2 + aZ^2))&#10;" />
+                            <Span
+                                Text="- Roll: atan(aY / sqrt(aX^2 + aZ^2))&#10;" />
+                            <Span
+                                Text="- Tilt: atan(sqrt(aX^2 + aY^2) / aZ)&#10;&#10;" />
+                            <Span
+                                Text="Below is the example code for the calculation" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Frame
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
+                    BorderColor="Gray"
+                    CornerRadius="5">
+                    <WebView
+                        x:Name="WebViewMotion1"
+                        BackgroundColor="Transparent">
+                        <WebView.Source>
+                            <HtmlWebViewSource x:Name="WebPageMotion1" />
+                        </WebView.Source>
+                    </WebView>
+                </Frame>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="2. Magnetometer: " FontAttributes="Bold" />
+                            <Span
+                                Text="The Yaw angle is derived from the horizontal components of the magnetometer (X, Y) using the formula:&#10;" />
+                            <Span
+                                Text="- Yaw: atan2(mY, mX)&#10;" />
+                            <Span
+                                Text="Note: The magnetometer readings are prone to interference from electrical fields, which may affect accuracy.&#10;&#10;" />
+                            <Span
+                                Text="Below is the example code for the calculation" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Frame
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
+                    BorderColor="Gray"
+                    CornerRadius="5">
+                    <WebView
+                        x:Name="WebViewMotion2"
+                        BackgroundColor="Transparent">
+                        <WebView.Source>
+                            <HtmlWebViewSource x:Name="WebPageMotion2" />
+                        </WebView.Source>
+                    </WebView>
+                </Frame>
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="3. Gyroscope: " FontAttributes="Bold" />
+                            <Span
+                                Text="The formula for each axis is:&#10;" />
+                            <Span
+                                Text="- Roll: Previous Roll Angle + (gX * Time Elapsed)&#10;" />
+                            <Span
+                                Text="- Pitch: Previous Pitch Angle + (gY * Time Elapsed)&#10;" />
+                            <Span
+                                Text="- Yaw: Previous Yaw Angle + (gZ * Time Elapsed)&#10;" />
+                            <Span
+                                Text="Note: fmod function in C language was used to ensure angles are within the range of -180 to 180 degrees.&#10;&#10;" />
+                            <Span
+                                Text="Below is the example code for the calculation" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                
+                <Frame
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
+                    BorderColor="Gray"
+                    CornerRadius="5">
+                    <WebView
+                        x:Name="WebViewMotion3"
+                        BackgroundColor="Transparent">
+                        <WebView.Source>
+                            <HtmlWebViewSource x:Name="WebPageMotion3" />
+                        </WebView.Source>
+                    </WebView>
+                </Frame>
+
+                <Label x:Name="CustomTestingSection"
+                       Text="Custom Testing"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource DodgerBlue}, Dark={StaticResource HotPink}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Label FontSize="16">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="You are able to flash your own firmware files (.bin or .hex) using this app.&#10;" />
+                            <Span
+                                Text="Note: .hex files can only be used for flashing via UART, while .bin files can be used for both flashing via STLink and UART." />
+                            <Span Text="&#10;&#10;" />
+
+                            <Span
+                                Text="The firmware files (.bin or .hex) can be generated using STM32CubeIDE, Keil uVision, or other ARM-based development environments.&#10;" />
+                            <Span
+                                Text="For .hex files, this app supports the Intel HEX format, which is commonly used for microcontroller programming and flashing.&#10;&#10;" />
+
+                            <Span
+                                Text="To visualize your data in graphs, you need to send your custom data in the following format: " />
+                            <Span Text="&#10;&#10;" />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;{data title1}: %.2f, {data title2}: %.2f, {data title3}: %.2f, ...\n&quot;" />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Each label represents the title of the graph, and the value represents the corresponding data point. " />
+                            <Span
+                                Text="You can include any number of data types, separated by commas. " />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="For example: " />
+                            <Span FontAttributes="Bold"
+                                  Text="&quot;gyro roll angle: 23.5, accel pitch angle: 55.3, Left_RPM: 300\n&quot;&#10;" />
+                            <Span Text="&#10;" />
+                            <Span
+                                Text="Each data type will be visualized as a separate graph. This allows you to observe trends and patterns in your data effectively." />
+                            <Span Text="&#10;" />
+                            <Span
+                                Text="Note: To ensure smooth rendering, each chart is limited to displaying a maximum of 1000 data points at a time. " />
+                            <Span
+                                Text="If the sampling rate is high and more than 1000 data points are generated, only the most recent 1000 data points will be shown on the chart. " />
+                            <Span Text="&#10;&#10;" />
+                            <Span
+                                Text="Refer to the code snippet below for implementation details on how to adjust sampling rate and send data in the correct format." />
+                        </FormattedString>
+
+                    </Label.FormattedText>
+                </Label>
+
+                <Frame
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
+                    BorderColor="Gray"
+                    CornerRadius="5">
+                    <WebView
+                        x:Name="WebViewMotion"
+                        BackgroundColor="Transparent">
+                        <WebView.Source>
+                            <HtmlWebViewSource x:Name="WebPageMotion" />
+                        </WebView.Source>
+                    </WebView>
+                </Frame>
+
+
+            </StackLayout>
+        </ScrollView>
+
+        <!--Floating UI components-->
+
+        <StackLayout
+            x:Name="SearchStackLayout"
+            VerticalOptions="Start"
+            HorizontalOptions="End"
+            WidthRequest="270"
+            MaximumHeightRequest="450"
+            Margin="10,50,30,0">
+
+            <Frame
+                x:Name="SearchFrame"
+                CornerRadius="10"
+                BorderColor="Gray"
+                BackgroundColor="Transparent"
+                Padding="0"
+                HeightRequest="45">
+
+                <SearchBar
+                    x:Name="SearchBar"
+                    BackgroundColor="{OnPlatform MacCatalyst= {AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}
+                    ,WinUI= {StaticResource Transparent}}"
+                    Placeholder="Search user guide"
+                    TextChanged="OnSearchBarTextChanged"
+                    SearchButtonPressed="OnSearchButtonPressed"
+                    HeightRequest="40" />
+            </Frame>
+
+            <ListView x:Name="SearchResults"
+                      ItemTapped="OnSearchResultTapped"
+                      services:CursorBehavior.Cursor="Hand"
+                      RowHeight="30"
+                      SelectionMode="Single"
+                      IsVisible="False">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10,0,0,0">
+                                <Label Text="{Binding}"
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                <!-- Define visual states for the hover effect -->
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor"
+                                                        Value="Transparent" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor"
+                                                        Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+
+        <Button x:Name="BackToTopButton"
+                Text="{OnPlatform MacCatalyst=Back to top, WinUI=⬆ }"
+                services:CursorBehavior.Cursor="Hand"
+                FontSize="{OnPlatform WinUI=28, MacCatalyst=18}"
+                FontAttributes="Bold"
+                WidthRequest="{OnPlatform WinUI=44}"
+                HeightRequest="{OnPlatform WinUI=44}"
+                CornerRadius="{OnPlatform WinUI=22}"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                Margin="20"
+                Clicked="OnBackToTopClicked"
+                IsVisible="False"
+                ToolTipProperties.Text="Click to scroll to top" />
+    </Grid>
+</ContentPage>

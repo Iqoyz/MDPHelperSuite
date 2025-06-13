@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="fyp_MDPHelperApp.Views.HWTesting.UARTConnectionSettingPopUp"
+           CanBeDismissedByTappingOutsideOfPopup="true"
+           Size="500, 300">
+
+    <Grid ColumnSpacing="20" RowSpacing="10" Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*" /> 
+            <ColumnDefinition Width="3*" /> 
+        </Grid.ColumnDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Text="UART CONNECTION SETTING"
+            Style="{StaticResource SubHeadline}"
+            FontSize="24"
+            Padding="0,0,0,10"
+            SemanticProperties.HeadingLevel="Level3" />
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            Grid.Column="0">
+            <Label
+                Text="Select the COM port"
+                IsVisible="{OnPlatform MacCatalyst=true, Default=false}"
+                HorizontalOptions="Start" />
+
+            <Picker
+                x:Name="ComPortDropdown"
+                Title="{OnPlatform WinUI=Select the COM port}"
+                SelectedIndexChanged="ComPortDropdown_SelectedIndexChanged" />
+        </VerticalStackLayout>
+
+        <Button
+            Grid.Row="1"
+            Grid.Column="1"
+            x:Name="RefreshButton"
+            Text="Refresh"
+            Clicked="OnRefreshButtonClicked"
+            HorizontalOptions="Start"
+            HeightRequest="40"
+            ToolTipProperties.Text="Click to refresh COM port list in dropdown bar" />
+
+        <VerticalStackLayout
+            Grid.Row="2"
+            Grid.Column="0">
+
+            <Label
+                Text="Select baud rate (default: 115200)"
+                IsVisible="{OnPlatform MacCatalyst=true, Default=false}"
+                HorizontalOptions="Start" />
+
+            <Picker
+                x:Name="BaudrateDropdown"
+                Title="{OnPlatform WinUI=Select baud rate (default: 115200)}"
+                SelectedIndexChanged="BaudrateDropdown_SelectedIndexChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:Int32}">
+                        <x:Int32>9600</x:Int32>
+                        <x:Int32>14400</x:Int32>
+                        <x:Int32>19200</x:Int32>
+                        <x:Int32>38400</x:Int32>
+                        <x:Int32>57600</x:Int32>
+                        <x:Int32>115200</x:Int32>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </VerticalStackLayout>
+
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            x:Name="ConnectButton"
+            Text="Connect"
+            Clicked="OnConnectButtonClicked"
+            HeightRequest="40"
+            HorizontalOptions="Start"
+            ToolTipProperties.Text="Click to connect the selected COM port" />
+
+        <Label
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Text="Click outside to close the pop up."
+            FontSize="12"
+            VerticalOptions="End" />
+    </Grid>
+</mct:Popup>
