@@ -59,8 +59,8 @@ A simple **console tool** to:
 ## 📄 Documentation
 
 For full details, diagrams, and implementation strategy, refer to:  
-📘 [Final Project Report (PDF)](./docs/MDPHelperSuite_Report.pdf) 
-📽️ [Final Year Project Slide (PDF)](./docs/fyp_amended_report_chan_yon_nan_final.pdf) 
+📘 [Final Project Report (PDF)](./docs/fyp_report.pdf) 
+📽️ [Final Year Project Slide (PDF)](./docs/fyp_presentation_slide.pdf) 
 
 ---
 
